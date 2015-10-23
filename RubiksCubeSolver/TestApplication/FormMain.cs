@@ -7,6 +7,7 @@ using TwoPhaseAlgorithmSolver;
 namespace TestApplication
 {
     using System.Linq;
+    using System.Runtime;
 
     public partial class FormMain : Form
     {
@@ -16,7 +17,6 @@ namespace TestApplication
         public FormMain()
         {
             this.InitializeComponent();
-
             //foreach (string path in Properties.Settings.Default.PluginPaths)
             //{
             //  solverPlugins.AddDll(path);
@@ -68,6 +68,7 @@ namespace TestApplication
                 }
                 this.rotations.Clear();
                 dlg.Algorithm.Moves.ForEach(m => this.rotations.Add(m));
+                GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
             }
             //dlg.Dispose();
         }
