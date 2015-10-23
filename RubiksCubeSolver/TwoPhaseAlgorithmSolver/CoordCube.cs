@@ -204,7 +204,8 @@
 
         private short GetFRtoBR()
         {
-            int a = 0, x = 0;
+            var a = 0;
+            var x = 0;
             var edge4 = new byte[4];
             for (var j = 11; j >= 0; j--)
                 if (this.EdgePermutation[j] >= 9)
@@ -263,7 +264,8 @@
 
         private short GetURFtoDLF()
         {
-            int a = 0, x = 0;
+            var a = 0;
+            var x = 0;
             var corner6 = new byte[6];
             for (var i = 0; i < N_CORNER; i++)
             {
@@ -324,7 +326,8 @@
 
         private int GetURtoDF()
         {
-            int a = 0, x = 0;
+            var a = 0;
+            var x = 0;
             var edge6 = new byte[6];
             for (var i = 0; i < 12; i++)
             {
@@ -401,7 +404,8 @@
 
         private short GetURtoUL()
         {
-            int a = 0, x = 0;
+            var a = 0;
+            var x = 0;
             var edge3 = new byte[3];
             for (var i = 0; i < 12; i++)
             {
@@ -454,7 +458,8 @@
 
         private short GetUBtoDF()
         {
-            int a = 0, x = 0;
+            var a = 0;
+            var x = 0;
             var edge3 = new byte[3];
             for (var i = 0; i < 12; i++)
             {

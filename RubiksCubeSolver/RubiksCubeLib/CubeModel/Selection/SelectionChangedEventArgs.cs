@@ -16,7 +16,7 @@ namespace RubiksCubeLib.CubeModel
         /// <param name="facePos">Position of the face</param>
         public SelectionChangedEventArgs(CubeFlag cubePos, FacePosition facePos)
         {
-            this.Position = new PositionSpec() { CubePosition = cubePos, FacePosition = facePos };
+            this.Position = new PositionSpec { CubePosition = cubePos, FacePosition = facePos };
         }
 
         // *** PROPERTIES ***

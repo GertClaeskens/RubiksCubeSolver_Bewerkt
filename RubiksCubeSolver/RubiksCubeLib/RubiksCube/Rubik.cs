@@ -41,7 +41,7 @@ namespace RubiksCubeLib.RubiksCube
                 {
                     for (var k = -1; k <= 1; k++)
                     {
-                        this.Cubes.Add(new Cube(this.GenSideFlags(i, j, k)));
+                        this.Cubes.Add(new Cube(GenSideFlags(i, j, k)));
                     }
                 }
             }
@@ -182,7 +182,7 @@ namespace RubiksCubeLib.RubiksCube
         /// <param name="j">Defines the YFlag (top to bottom)</param>
         /// <param name="k">Defines the ZFlag (front to back)</param>
         /// <returns></returns>
-        public CubeFlag GenSideFlags(int i, int j, int k)
+        public static CubeFlag GenSideFlags(int i, int j, int k)
         {
             var p = new CubeFlag();
             switch (i)

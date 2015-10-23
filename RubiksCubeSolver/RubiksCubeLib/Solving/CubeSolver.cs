@@ -87,7 +87,7 @@ namespace RubiksCubeLib.Solver
                 sw.Restart();
                 step.Value.Item1();
                 sw.Stop();
-                this.OnSolutionStepCompleted?.Invoke(this, new SolutionStepCompletedEventArgs(step.Key, false, new Algorithm() { Moves = this._movesOfStep }, (int)sw.ElapsedMilliseconds, step.Value.Item2));
+                this.OnSolutionStepCompleted?.Invoke(this, new SolutionStepCompletedEventArgs(step.Key, false, new Algorithm { Moves = this._movesOfStep }, (int)sw.ElapsedMilliseconds, step.Value.Item2));
                 this._movesOfStep.Clear();
             }
         }

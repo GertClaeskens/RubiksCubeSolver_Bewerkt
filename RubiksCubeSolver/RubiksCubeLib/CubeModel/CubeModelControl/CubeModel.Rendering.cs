@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Threading;
-
-namespace RubiksCubeLib.CubeModel
+﻿namespace RubiksCubeLib.CubeModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.Linq;
+    using System.Threading;
+
     public partial class CubeModel
     {
         private List<double> _frameTimes;

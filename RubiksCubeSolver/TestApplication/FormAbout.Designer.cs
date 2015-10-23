@@ -28,7 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAbout));
+      var resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAbout));
       this.pbLogo = new System.Windows.Forms.PictureBox();
       this.panel1 = new System.Windows.Forms.Panel();
       this.linkMail = new System.Windows.Forms.LinkLabel();

@@ -3,6 +3,8 @@ using System.Linq;
 
 namespace RubiksCubeLib.Solver
 {
+    using static FacePosition;
+
     /// <summary>
     /// A collection of solvability tests
     /// </summary>
@@ -37,10 +39,11 @@ namespace RubiksCubeLib.Solver
         /// Refreshes the position of a cube
         /// </summary>
         /// <param name="r">Parent rubik of the cube</param>
+        /// <param name="c">describe c parameter on RefreshCube</param>
         private static Cube RefreshCube(Rubik r, Cube c) => r.Cubes.First(cu => CollectionMethods.ScrambledEquals(cu.Colors, c.Colors));
 
         /// <summary>
-        /// Returns the
+        /// Returns the Orientation
         /// </summary>
         /// <param name="rubik"></param>
         /// <param name="c"></param>
@@ -59,29 +62,29 @@ namespace RubiksCubeLib.Solver
 
                     var clonedCube = RefreshCube(clone, c);
                     var yFace = clonedCube.Faces.First(f => f.Color == rubik.TopColor || f.Color == rubik.BottomColor);
-                    if (!FacePosition.YPos.HasFlag(yFace.Position)) orientation = Orientation.Clockwise;
+                    if (!YPos.HasFlag(yFace.Position)) orientation = Orientation.Clockwise;
                 }
                 else
                 {
                     var zFace = c.Faces.First(f => f.Color == rubik.FrontColor || f.Color == rubik.BackColor);
                     if (c.Position.HasFlag(CubeFlag.MiddleLayer))
                     {
-                        if (!FacePosition.ZPos.HasFlag(zFace.Position)) orientation = Orientation.Clockwise;
+                        if (!ZPos.HasFlag(zFace.Position)) orientation = Orientation.Clockwise;
                     }
                     else
                     {
-                        if (!FacePosition.YPos.HasFlag(zFace.Position)) orientation = Orientation.Clockwise;
+                        if (!YPos.HasFlag(zFace.Position)) orientation = Orientation.Clockwise;
                     }
                 }
             }
             else if (c.IsCorner)
             {
                 var face = c.Faces.First(f => f.Color == rubik.TopColor || f.Color == rubik.BottomColor);
-                if (FacePosition.YPos.HasFlag(face.Position))
+                if (YPos.HasFlag(face.Position))
                 {
                     return orientation;
                 }
-                orientation = FacePosition.XPos.HasFlag(face.Position) ^ !(c.Position.HasFlag(CubeFlag.BottomLayer) ^ (c.Position.HasFlag(CubeFlag.FrontSlice) ^ c.Position.HasFlag(CubeFlag.RightSlice))) ? Orientation.CounterClockwise : Orientation.Clockwise;
+                orientation = XPos.HasFlag(face.Position) ^ !(c.Position.HasFlag(CubeFlag.BottomLayer) ^ (c.Position.HasFlag(CubeFlag.FrontSlice) ^ c.Position.HasFlag(CubeFlag.RightSlice))) ? Orientation.CounterClockwise : Orientation.Clockwise;
             }
 
             return orientation;

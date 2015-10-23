@@ -28,7 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DialogParityCheckResult));
+      var resources = new System.ComponentModel.ComponentResourceManager(typeof(DialogParityCheckResult));
       this.panel1 = new System.Windows.Forms.Panel();
       this.pbEdgeTest = new System.Windows.Forms.PictureBox();
       this.pbColorTest = new System.Windows.Forms.PictureBox();

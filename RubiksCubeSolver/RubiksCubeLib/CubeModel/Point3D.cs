@@ -53,9 +53,6 @@ namespace RubiksCubeLib.CubeModel
             var rad = angleInDeg * Math.PI / 180;
             var cosa = Math.Cos(rad);
             var sina = Math.Sin(rad);
-
-            //Deze nog nakijken waarom nieuw punt declareren als ook gaat met de X,Y,Z?
-            //var old = new Point3D(this.X, this.Y, this.Z);
             var x = this.X;
             var y = this.Y;
             var z = this.Z;
@@ -95,8 +92,8 @@ namespace RubiksCubeLib.CubeModel
         public Point3D Project(int viewWidth, int viewHeight, int fov, int viewDistance, double scale)
         {
             var factor = fov / (viewDistance + this.Z) * scale;
-            var Xn = this.X * factor + viewWidth / 2;
-            var Yn = this.Y * factor + viewHeight / 2;
+            var Xn = this.X * factor + viewWidth / 2.0;
+            var Yn = this.Y * factor + viewHeight / 2.0;
             return new Point3D(Xn, Yn, this.Z);
         }
     }

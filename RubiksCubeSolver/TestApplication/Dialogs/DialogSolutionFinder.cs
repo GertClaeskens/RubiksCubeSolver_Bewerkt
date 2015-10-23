@@ -120,18 +120,13 @@ namespace TestApplication
             foreach (var step in solvr.SolutionSteps)
             {
                 var l = new Label
-                {
-                    AutoSize = true,
-                    Font = new Font(
-                                      "Segoe UI",
-                                      9F,
-                                      FontStyle.Regular,
-                                      GraphicsUnit.Point,
-                                      0),
-                    Location = new Point(X, y),
-                    Name = $"label{step.Key}",
-                    Text = step.Key
-                };
+                            {
+                                AutoSize = true,
+                                Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0),
+                                Location = new Point(X, y),
+                                Name = $"label{step.Key}",
+                                Text = step.Key
+                            };
                 this.panel1.Controls.Add(l);
 
                 var p = new PictureBox

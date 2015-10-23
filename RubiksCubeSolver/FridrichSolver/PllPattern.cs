@@ -7,8 +7,7 @@ namespace FridrichSolver
 {
   public class PllPattern: PatternTable
   {
-      public override Dictionary<Pattern, Algorithm> Patterns { get; } = new Dictionary<Pattern, Algorithm>()
-            {
+      public override Dictionary<Pattern, Algorithm> Patterns { get; } = new Dictionary<Pattern, Algorithm> {
                 // Permutations of edges or corners only
                 {new Pattern(new[] {"MFU,MBU", "MBU,RSU", "RSU,MFU"}, 1.0 / 18.0), new Algorithm("R2 U F B' R2 F' B U R2")}, // PLL Ub
                 {new Pattern(new[] {"MFU,RSU", "MBU,MFU", "RSU,MBU"}, 1.0 / 18.0), new Algorithm("R2 U' F B' R2 F' B U' R2")}, // PLL Ua

@@ -1,15 +1,16 @@
-﻿using RubiksCubeLib.RubiksCube;
-using RubiksCubeLib.Solver;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Windows.Forms;
-
-namespace RubiksCubeLib.CubeModel
+﻿namespace RubiksCubeLib.CubeModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Linq;
+    using System.Windows.Forms;
+
+    using RubiksCubeLib.RubiksCube;
+    using RubiksCubeLib.Solver;
+
     /// <summary>
     /// Represents a 3D rubiks cube
     /// </summary>
@@ -203,7 +204,7 @@ namespace RubiksCubeLib.CubeModel
             this._selections = new SelectionCollection();
             this.Rubik.Cubes.ForEach(c => c.Faces.ToList().ForEach(f =>
               {
-                  if (f.Color != Color.Black) this._selections.Add(new PositionSpec() { CubePosition = c.Position.Flags, FacePosition = f.Position }, Selection.None);
+                  if (f.Color != Color.Black) this._selections.Add(new PositionSpec { CubePosition = c.Position.Flags, FacePosition = f.Position }, Selection.None);
               }));
         }
 
@@ -215,7 +216,7 @@ namespace RubiksCubeLib.CubeModel
         {
             this.Rubik.Cubes.ForEach(c => c.Faces.Where(f => f.Color != Color.Black).ToList().ForEach(f =>
               {
-                  var pos = new PositionSpec() { FacePosition = f.Position, CubePosition = c.Position.Flags };
+                  var pos = new PositionSpec { FacePosition = f.Position, CubePosition = c.Position.Flags };
 
                   if (this._selections[pos].HasFlag(Selection.Possible))
                   {
@@ -334,7 +335,6 @@ namespace RubiksCubeLib.CubeModel
 
         private PositionSpec Render(Graphics g, IEnumerable<Face3D> frame, Point mousePos)
         {
-            Brush b = null;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             var pos = PositionSpec.Default;
             var _brushIndex = 0;
@@ -371,8 +371,9 @@ namespace RubiksCubeLib.CubeModel
 
                 //b = new SolidBrush(face.Color);
                 var factor = ((Math.Sin(Environment.TickCount / (double)200) + 1) / 4) + 0.75;
-                var facePos = new PositionSpec() { FacePosition = face.Position, CubePosition = face.MasterPosition };
+                var facePos = new PositionSpec { FacePosition = face.Position, CubePosition = face.MasterPosition };
 
+                Brush b;
                 if (this.MouseHandling)
                 {
                     if (this._selections[facePos].HasFlag(Selection.Second))
@@ -510,7 +511,7 @@ namespace RubiksCubeLib.CubeModel
                 var parr = new[] { new Point(x, y), new Point(x, y + square), new Point(x + square, y + square), new Point(x + square, y) };
 
                 var factor = ((Math.Sin(Environment.TickCount / (double)200) + 1) / 4) + 0.75;
-                var facePos = new PositionSpec() { FacePosition = face.Position, CubePosition = face.MasterPosition };
+                var facePos = new PositionSpec { FacePosition = face.Position, CubePosition = face.MasterPosition };
 
                 if (this.MouseHandling)
                 {
@@ -540,14 +541,19 @@ namespace RubiksCubeLib.CubeModel
                     b = new SolidBrush(face.Color);  */
 
                 g.FillPolygon(b, parr);
-                g.DrawPolygon(new Pen(Color.Black, 1), parr);
+                using (var pen = new Pen(Color.Black, 1))
+                {
+                    g.DrawPolygon(pen, parr);
+                }
 
-                var gp = new GraphicsPath();
-                gp.AddPolygon(parr);
-                if (gp.IsVisible(mousePos))
-                    pos = facePos;
+                using (var gp = new GraphicsPath())
+                {
+                    gp.AddPolygon(parr);
+                    if (gp.IsVisible(mousePos))
+                        pos = facePos;
 
-                b.Dispose();
+                    b.Dispose();
+                }
             }
 
             g.DrawRectangle(Pens.Black, 0, this.Height - 25, this.Width - 1, 24);

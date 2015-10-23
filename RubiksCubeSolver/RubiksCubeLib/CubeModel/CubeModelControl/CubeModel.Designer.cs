@@ -1,11 +1,13 @@
 ﻿namespace RubiksCubeLib.CubeModel
 {
-	partial class CubeModel
+    using System.ComponentModel;
+
+    partial class CubeModel
 	{
 		/// <summary> 
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components = null;
 
 		/// <summary> 
 		/// Clean up any resources being used.

@@ -18,7 +18,7 @@ namespace TestApplication
             }
 
             // Color test
-            bool colors = Solvability.CorrectColors(rubik);
+            var colors = Solvability.CorrectColors(rubik);
             lblColorTest.Text = colors ? "Passed" : "Failed";
             pbColorTest.Image = colors ? Properties.Resources.ok : Properties.Resources.cross_icon;
 
@@ -36,17 +36,17 @@ namespace TestApplication
             else
             {
                 // Permutation parity test
-                bool permutation = Solvability.PermutationParityTest(rubik);
+                var permutation = Solvability.PermutationParityTest(rubik);
                 lblPermutationTest.Text = permutation ? "Passed" : "Failed";
                 pbPermutationTest.Image = permutation ? Properties.Resources.ok : Properties.Resources.cross_icon;
 
                 // Corner parity test
-                bool corner = Solvability.CornerParityTest(rubik);
+                var corner = Solvability.CornerParityTest(rubik);
                 lblCornerTest.Text = corner ? "Passed" : "Failed";
                 pbCornerTest.Image = corner ? Properties.Resources.ok : Properties.Resources.cross_icon;
 
                 // Edge parity test
-                bool edge = Solvability.EdgeParityTest(rubik);
+                var edge = Solvability.EdgeParityTest(rubik);
                 lblEdgeTest.Text = edge ? "Passed" : "Failed";
                 pbEdgeTest.Image = edge ? Properties.Resources.ok : Properties.Resources.cross_icon;
 

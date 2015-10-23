@@ -3,6 +3,6 @@
   public enum DrawingMode
   {
     TwoDimensional,
-    ThreeDimensional,
+    ThreeDimensional
   }
 }

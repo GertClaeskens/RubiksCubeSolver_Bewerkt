@@ -69,7 +69,8 @@ namespace RubiksCubeLib
         /// <summary>
         /// Converts a CubeFlag into values from -1 to 1
         /// </summary>
-        /// <exception cref="System.Exception">Thrown when the CubeFlag is either invalid or has more than one flag</exception>
+        /// <param name="flag">todo: describe flag parameter on ToInt</param>
+        /// <exception cref="Exception">Thrown when the CubeFlag is either invalid or has more than one flag</exception>
         public static int ToInt(CubeFlag flag)
         {
             if (IsXFlag(flag))
@@ -86,7 +87,7 @@ namespace RubiksCubeLib
                         return -1;
                 }
             }
-            else if (IsYFlag(flag))
+            if (IsYFlag(flag))
             {
                 switch (flag)
                 {
@@ -100,7 +101,7 @@ namespace RubiksCubeLib
                         return 1;
                 }
             }
-            else if (IsZFlag(flag))
+            if (IsZFlag(flag))
             {
                 switch (flag)
                 {
@@ -114,10 +115,9 @@ namespace RubiksCubeLib
                         return -1;
                 }
             }
-            else if (flag == CubeFlag.None)
+            if (flag == CubeFlag.None)
                 return 0;
-            else
-                throw new Exception("Flag can not be converted to an integer");
+            throw new Exception("Flag can not be converted to an integer");
         }
 
         /// <summary>

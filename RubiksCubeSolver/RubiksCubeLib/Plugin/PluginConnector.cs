@@ -41,14 +41,9 @@ namespace RubiksCubeLib
       var types = a.GetTypes();
       foreach (var t in types)
       {
-        try
         {
           var x = a.CreateInstance(t.FullName);
           plugins.Add((T)x);
-        }
-        catch
-        {
-            // ignored
         }
       }
       return plugins;

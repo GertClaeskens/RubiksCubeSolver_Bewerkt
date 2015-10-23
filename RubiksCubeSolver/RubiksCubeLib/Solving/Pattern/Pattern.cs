@@ -19,7 +19,7 @@ namespace RubiksCubeLib.Solver
         /// <summary>
         /// Gets all possible edge positions
         /// </summary>
-        public static IEnumerable<CubePosition> EdgePositions => new List<CubePosition>()
+        public static IEnumerable<CubePosition> EdgePositions => new List<CubePosition>
                                                                  {
                                                                      new CubePosition(CubeFlag.MiddleSliceSides,CubeFlag.TopLayer, CubeFlag.BackSlice),
                                                                      new CubePosition(CubeFlag.RightSlice,CubeFlag.TopLayer, CubeFlag.MiddleSlice),
@@ -40,7 +40,7 @@ namespace RubiksCubeLib.Solver
         /// <summary>
         /// Gets all possible corner positions
         /// </summary>
-        public static IEnumerable<CubePosition> CornerPositions => new List<CubePosition>()
+        public static IEnumerable<CubePosition> CornerPositions => new List<CubePosition>
                                                                    {
                                                                        new CubePosition(CubeFlag.LeftSlice,CubeFlag.TopLayer, CubeFlag.BackSlice),
                                                                        new CubePosition(CubeFlag.RightSlice,CubeFlag.TopLayer, CubeFlag.BackSlice),
@@ -165,7 +165,7 @@ namespace RubiksCubeLib.Solver
         /// <param name="standard">Standard order of positions</param>
         /// <param name="input">Current Order of positions</param>
         /// <returns>Number of required inversions</returns>
-        private static int CountInversions(IList<CubeFlag> standard, List<CubeFlag> input) => input.Select(standard.IndexOf).Select((index, i) => input.Select(standard.IndexOf).Where((index2, j) => index2 > index && j < i).Count()).Sum();
+        private static int CountInversions(IList<CubeFlag> standard, IReadOnlyCollection<CubeFlag> input) => input.Select(standard.IndexOf).Select((index, i) => input.Select(standard.IndexOf).Where((index2, j) => index2 > index && j < i).Count()).Sum();
 
         /// <summary>
         /// True, if this pattern includes all the pattern elements of another pattern
@@ -208,7 +208,7 @@ namespace RubiksCubeLib.Solver
         /// <summary>
         /// Transforms the pattern
         /// </summary>
-        /// <param name="type">Transformation axis</param>
+        /// <param name="rotationLayer">rotationLayer parameter on Transform</param>
         public Pattern Transform(CubeFlag rotationLayer)
         {
             var newPattern = this.DeepClone();
@@ -239,7 +239,7 @@ namespace RubiksCubeLib.Solver
                     pattern = (Pattern)deserializer.Deserialize(sr);
                 }
             }
-            catch
+            catch (Exception)
             {
                 System.Windows.Forms.MessageBox.Show("Xml input error");
             }

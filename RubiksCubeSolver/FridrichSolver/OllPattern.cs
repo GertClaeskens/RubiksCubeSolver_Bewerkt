@@ -7,8 +7,7 @@ namespace FridrichSolver
 {
   public class OllPattern : PatternTable
   {
-      public override Dictionary<Pattern, Algorithm> Patterns { get; } = new Dictionary<Pattern, Algorithm>()
-            {
+      public override Dictionary<Pattern, Algorithm> Patterns { get; } = new Dictionary<Pattern, Algorithm> {
                 // All edges oriented correctly
                 {new Pattern(new[] {"LFU,1", "RFU,1", "RBU,1"}, 1.0 / 54.0), new Algorithm("R' U' R U' R' U2 R")}, // OLL #26
                 {new Pattern(new[] {"LFU,2", "RBU,2", "LBU,2"}, 1.0 / 54.0), new Algorithm("R' U2 R U R' U R")}, // OLL #27

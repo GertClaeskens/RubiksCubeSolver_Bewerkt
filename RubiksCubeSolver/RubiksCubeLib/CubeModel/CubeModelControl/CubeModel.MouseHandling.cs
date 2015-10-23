@@ -1,10 +1,10 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-
-namespace RubiksCubeLib.CubeModel
+﻿namespace RubiksCubeLib.CubeModel
 {
+    using System;
+    using System.Drawing;
+    using System.Linq;
+    using System.Windows.Forms;
+
     /// <summary>
     /// Represents a 3D rubiks cube
     /// </summary>
@@ -83,139 +83,138 @@ namespace RubiksCubeLib.CubeModel
         /// <summary>
         /// Detection and execution of mouse-controlled layer rotations
         /// </summary>
+        /// <param name="e">todo: describe e parameter on OnMouseClick</param>
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            if (this.MouseHandling)
+            if (this.MouseHandling && e.Button == MouseButtons.Left)
             {
-                if (e.Button == MouseButtons.Left)
+                if (this._oldSelection.IsDefault)
                 {
-                    if (this._oldSelection.IsDefault)
+                    if (this._currentSelection.IsDefault)
                     {
-                        if (this._currentSelection.IsDefault)
+                        this._selections.Reset();
+                        this._oldSelection = PositionSpec.Default;
+                        this._currentSelection = PositionSpec.Default;
+                    }
+                    else
+                    {
+                        if (!CubePosition.IsCorner(this._currentSelection.CubePosition))
                         {
-                            this._selections.Reset();
-                            this._oldSelection = PositionSpec.Default;
-                            this._currentSelection = PositionSpec.Default;
-                        }
-                        else
-                        {
-                            if (!CubePosition.IsCorner(this._currentSelection.CubePosition))
-                            {
-                                this._oldSelection = this._currentSelection;
-                                this.Rubik.Cubes.ForEach(c => c.Faces.Where(f => f.Color != Color.Black).ToList().ForEach(f =>
+                            this._oldSelection = this._currentSelection;
+                            this.Rubik.Cubes.ForEach(c => c.Faces.Where(f => f.Color != Color.Black).ToList().ForEach(f =>
+                              {
+                                  var pos = new PositionSpec { CubePosition = c.Position.Flags, FacePosition = f.Position };
+
+                                  if (this._currentSelection.CubePosition != c.Position.Flags && !CubePosition.IsCenter(c.Position.Flags) && this._currentSelection.FacePosition == f.Position)
                                   {
-                                      var pos = new PositionSpec() { CubePosition = c.Position.Flags, FacePosition = f.Position };
+                                      var assocLayer = CubeFlagService.FromFacePosition(this._currentSelection.FacePosition);
+                                      var commonLayer = CubeFlagService.GetFirstNotInvalidCommonFlag(this._currentSelection.CubePosition, c.Position.Flags, assocLayer);
 
-                                      if (this._currentSelection.CubePosition != c.Position.Flags && !CubePosition.IsCenter(c.Position.Flags) && this._currentSelection.FacePosition == f.Position)
+                                      if (commonLayer != CubeFlag.None && c.Position.HasFlag(commonLayer))
                                       {
-                                          var assocLayer = CubeFlagService.FromFacePosition(this._currentSelection.FacePosition);
-                                          var commonLayer = CubeFlagService.GetFirstNotInvalidCommonFlag(this._currentSelection.CubePosition, c.Position.Flags, assocLayer);
-
-                                          if (commonLayer != CubeFlag.None && c.Position.HasFlag(commonLayer))
-                                          {
-                                              this._selections[pos] |= Selection.Possible;
-                                          }
-                                          else
-                                          {
-                                              this._selections[pos] |= Selection.NotPossible;
-                                          }
+                                          this._selections[pos] |= Selection.Possible;
                                       }
                                       else
                                       {
                                           this._selections[pos] |= Selection.NotPossible;
                                       }
-                                  }));
-                                this.State =
-                                    $"First selection [{this._currentSelection.CubePosition}] | {this._currentSelection.FacePosition}";
-                            }
-                            else
-                            {
-                                this._selections.Reset();
-                                this.State = "Error: Invalid first selection, must not be a corner";
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (this._currentSelection.IsDefault)
-                        {
-                            this.State = "Ready";
+                                  }
+                                  else
+                                  {
+                                      this._selections[pos] |= Selection.NotPossible;
+                                  }
+                              }));
+                            this.State =
+                                $"First selection [{this._currentSelection.CubePosition}] | {this._currentSelection.FacePosition}";
                         }
                         else
                         {
-                            if (this._currentSelection.CubePosition != this._oldSelection.CubePosition)
+                            this._selections.Reset();
+                            this.State = "Error: Invalid first selection, must not be a corner";
+                        }
+                    }
+                }
+                else
+                {
+                    if (this._currentSelection.IsDefault)
+                    {
+                        this.State = "Ready";
+                    }
+                    else
+                    {
+                        if (this._currentSelection.CubePosition != this._oldSelection.CubePosition)
+                        {
+                            if (!CubePosition.IsCenter(this._currentSelection.CubePosition))
                             {
-                                if (!CubePosition.IsCenter(this._currentSelection.CubePosition))
+                                if (this._oldSelection.FacePosition == this._currentSelection.FacePosition)
                                 {
-                                    if (this._oldSelection.FacePosition == this._currentSelection.FacePosition)
+                                    var assocLayer = CubeFlagService.FromFacePosition(this._oldSelection.FacePosition);
+                                    var commonLayer = CubeFlagService.GetFirstNotInvalidCommonFlag(this._oldSelection.CubePosition, this._currentSelection.CubePosition, assocLayer);
+                                    var direction = true;
+
+                                    if (commonLayer == CubeFlag.TopLayer || commonLayer == CubeFlag.MiddleLayer || commonLayer == CubeFlag.BottomLayer)
                                     {
-                                        var assocLayer = CubeFlagService.FromFacePosition(this._oldSelection.FacePosition);
-                                        var commonLayer = CubeFlagService.GetFirstNotInvalidCommonFlag(this._oldSelection.CubePosition, this._currentSelection.CubePosition, assocLayer);
-                                        var direction = true;
+                                        if (((this._oldSelection.FacePosition == FacePosition.Back) && this._currentSelection.CubePosition.HasFlag(CubeFlag.RightSlice))
+                                        || ((this._oldSelection.FacePosition == FacePosition.Left) && this._currentSelection.CubePosition.HasFlag(CubeFlag.BackSlice))
+                                        || ((this._oldSelection.FacePosition == FacePosition.Front) && this._currentSelection.CubePosition.HasFlag(CubeFlag.LeftSlice))
+                                        || ((this._oldSelection.FacePosition == FacePosition.Right) && this._currentSelection.CubePosition.HasFlag(CubeFlag.FrontSlice)))
+                                            direction = false;
+                                        if (commonLayer == CubeFlag.TopLayer || commonLayer == CubeFlag.MiddleLayer)
+                                            direction = !direction;
+                                    }
 
-                                        if (commonLayer == CubeFlag.TopLayer || commonLayer == CubeFlag.MiddleLayer || commonLayer == CubeFlag.BottomLayer)
-                                        {
-                                            if (((this._oldSelection.FacePosition == FacePosition.Back) && this._currentSelection.CubePosition.HasFlag(CubeFlag.RightSlice))
-                                            || ((this._oldSelection.FacePosition == FacePosition.Left) && this._currentSelection.CubePosition.HasFlag(CubeFlag.BackSlice))
-                                            || ((this._oldSelection.FacePosition == FacePosition.Front) && this._currentSelection.CubePosition.HasFlag(CubeFlag.LeftSlice))
-                                            || ((this._oldSelection.FacePosition == FacePosition.Right) && this._currentSelection.CubePosition.HasFlag(CubeFlag.FrontSlice)))
-                                                direction = false;
-                                            if (commonLayer == CubeFlag.TopLayer || commonLayer == CubeFlag.MiddleLayer)
-                                                direction = !direction;
-                                        }
+                                    if (commonLayer == CubeFlag.LeftSlice || commonLayer == CubeFlag.MiddleSliceSides || commonLayer == CubeFlag.RightSlice)
+                                    {
+                                        if (((this._oldSelection.FacePosition == FacePosition.Bottom) && this._currentSelection.CubePosition.HasFlag(CubeFlag.BackSlice))
+                                        || ((this._oldSelection.FacePosition == FacePosition.Back) && this._currentSelection.CubePosition.HasFlag(CubeFlag.TopLayer))
+                                        || ((this._oldSelection.FacePosition == FacePosition.Top) && this._currentSelection.CubePosition.HasFlag(CubeFlag.FrontSlice))
+                                        || ((this._oldSelection.FacePosition == FacePosition.Front) && this._currentSelection.CubePosition.HasFlag(CubeFlag.BottomLayer)))
+                                            direction = false;
+                                        if (commonLayer == CubeFlag.LeftSlice)
+                                            direction = !direction;
+                                    }
 
-                                        if (commonLayer == CubeFlag.LeftSlice || commonLayer == CubeFlag.MiddleSliceSides || commonLayer == CubeFlag.RightSlice)
-                                        {
-                                            if (((this._oldSelection.FacePosition == FacePosition.Bottom) && this._currentSelection.CubePosition.HasFlag(CubeFlag.BackSlice))
-                                            || ((this._oldSelection.FacePosition == FacePosition.Back) && this._currentSelection.CubePosition.HasFlag(CubeFlag.TopLayer))
-                                            || ((this._oldSelection.FacePosition == FacePosition.Top) && this._currentSelection.CubePosition.HasFlag(CubeFlag.FrontSlice))
-                                            || ((this._oldSelection.FacePosition == FacePosition.Front) && this._currentSelection.CubePosition.HasFlag(CubeFlag.BottomLayer)))
-                                                direction = false;
-                                            if (commonLayer == CubeFlag.LeftSlice)
-                                                direction = !direction;
-                                        }
+                                    if (commonLayer == CubeFlag.BackSlice || commonLayer == CubeFlag.MiddleSlice || commonLayer == CubeFlag.FrontSlice)
+                                    {
+                                        if (((this._oldSelection.FacePosition == FacePosition.Top) && this._currentSelection.CubePosition.HasFlag(CubeFlag.RightSlice))
+                                        || ((this._oldSelection.FacePosition == FacePosition.Right) && this._currentSelection.CubePosition.HasFlag(CubeFlag.BottomLayer))
+                                        || ((this._oldSelection.FacePosition == FacePosition.Bottom) && this._currentSelection.CubePosition.HasFlag(CubeFlag.LeftSlice))
+                                        || ((this._oldSelection.FacePosition == FacePosition.Left) && this._currentSelection.CubePosition.HasFlag(CubeFlag.TopLayer)))
+                                            direction = false;
+                                        if (commonLayer == CubeFlag.FrontSlice || commonLayer == CubeFlag.MiddleSlice)
+                                            direction = !direction;
+                                    }
 
-                                        if (commonLayer == CubeFlag.BackSlice || commonLayer == CubeFlag.MiddleSlice || commonLayer == CubeFlag.FrontSlice)
-                                        {
-                                            if (((this._oldSelection.FacePosition == FacePosition.Top) && this._currentSelection.CubePosition.HasFlag(CubeFlag.RightSlice))
-                                            || ((this._oldSelection.FacePosition == FacePosition.Right) && this._currentSelection.CubePosition.HasFlag(CubeFlag.BottomLayer))
-                                            || ((this._oldSelection.FacePosition == FacePosition.Bottom) && this._currentSelection.CubePosition.HasFlag(CubeFlag.LeftSlice))
-                                            || ((this._oldSelection.FacePosition == FacePosition.Left) && this._currentSelection.CubePosition.HasFlag(CubeFlag.TopLayer)))
-                                                direction = false;
-                                            if (commonLayer == CubeFlag.FrontSlice || commonLayer == CubeFlag.MiddleSlice)
-                                                direction = !direction;
-                                        }
-
-                                        if (commonLayer != CubeFlag.None)
-                                        {
-                                            this.RotateLayerAnimated(commonLayer, direction);
-                                        }
-                                        else
-                                        {
-                                            this.State = "Error: Invalid second selection, does not specify distinct layer";
-                                        }
+                                    if (commonLayer != CubeFlag.None)
+                                    {
+                                        this.RotateLayerAnimated(commonLayer, direction);
                                     }
                                     else
                                     {
-                                        this.State = "Error: Invalid second selection, must match orientation of first selection";
+                                        this.State = "Error: Invalid second selection, does not specify distinct layer";
                                     }
                                 }
                                 else
                                 {
-                                    this.State = "Error: Invalid second selection, must not be a center";
+                                    this.State = "Error: Invalid second selection, must match orientation of first selection";
                                 }
                             }
                             else
                             {
-                                this.State = "Error: Invalid second selection, must not be first selection";
+                                this.State = "Error: Invalid second selection, must not be a center";
                             }
                         }
-                        this._selections.Reset();
-                        this._oldSelection = PositionSpec.Default;
-                        this._currentSelection = PositionSpec.Default;
+                        else
+                        {
+                            this.State = "Error: Invalid second selection, must not be first selection";
+                        }
                     }
+                    this._selections.Reset();
+                    this._oldSelection = PositionSpec.Default;
+                    this._currentSelection = PositionSpec.Default;
                 }
             }
+
 
             base.OnMouseClick(e);
         }

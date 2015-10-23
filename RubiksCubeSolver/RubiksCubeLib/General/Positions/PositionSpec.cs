@@ -20,7 +20,7 @@
         /// <summary>
         /// Returns the default position
         /// </summary>
-        public static PositionSpec Default => new PositionSpec() { CubePosition = CubeFlag.None, FacePosition = FacePosition.None };
+        public static PositionSpec Default => new PositionSpec { CubePosition = CubeFlag.None, FacePosition = FacePosition.None };
 
         /// <summary>
         /// Returns true if this position is the default one

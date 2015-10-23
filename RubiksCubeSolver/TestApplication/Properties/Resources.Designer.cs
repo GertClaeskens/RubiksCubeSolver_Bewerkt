@@ -39,7 +39,7 @@ namespace TestApplication.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TestApplication.Properties.Resources", typeof(Resources).Assembly);
+                    var temp = new global::System.Resources.ResourceManager("TestApplication.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -65,7 +65,7 @@ namespace TestApplication.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap cross_icon {
             get {
-                object obj = ResourceManager.GetObject("cross_icon", resourceCulture);
+                var obj = ResourceManager.GetObject("cross_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -75,7 +75,7 @@ namespace TestApplication.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap logo {
             get {
-                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                var obj = ResourceManager.GetObject("logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -85,7 +85,7 @@ namespace TestApplication.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap ok {
             get {
-                object obj = ResourceManager.GetObject("ok", resourceCulture);
+                var obj = ResourceManager.GetObject("ok", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -95,7 +95,7 @@ namespace TestApplication.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap questionmark {
             get {
-                object obj = ResourceManager.GetObject("questionmark", resourceCulture);
+                var obj = ResourceManager.GetObject("questionmark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -105,7 +105,7 @@ namespace TestApplication.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap refresh {
             get {
-                object obj = ResourceManager.GetObject("refresh", resourceCulture);
+                var obj = ResourceManager.GetObject("refresh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

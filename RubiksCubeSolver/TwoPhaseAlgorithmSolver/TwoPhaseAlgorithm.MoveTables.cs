@@ -7,16 +7,16 @@
     {
         private void InitMoveTables()
         {
-            InitMoves();
-            InitTwistMoveTable();
-            InitFlipMoveTable();
-            InitParityMove();
-            InitFRtoBR_MoveTable();
-            InitURFtoDLF_MoveTable();
-            InitURtoUL_MoveTable();
-            InitUBtoDF_MoveTable();
-            InitURtoDF_MoveTable();
-            InitMergeURtoULandUBtoDF();
+            this.InitMoves();
+            this.InitTwistMoveTable();
+            this.InitFlipMoveTable();
+            this.InitParityMove();
+            this.InitFRtoBR_MoveTable();
+            this.InitURFtoDLF_MoveTable();
+            this.InitURtoUL_MoveTable();
+            this.InitUBtoDF_MoveTable();
+            this.InitURtoDF_MoveTable();
+            this.InitMergeURtoULandUBtoDF();
         }
 
         private readonly CoordCube[] moves = new CoordCube[N_MOVE];
@@ -63,17 +63,17 @@
 
         private void InitMoves()
         {
-            this.moves[0] = cc1;
+            this.moves[0] = this.cc1;
 
-            this.moves[3] = cc2;
+            this.moves[3] = this.cc2;
 
-            this.moves[6] = cc3;
+            this.moves[6] = this.cc3;
 
-            this.moves[9] = cc4;
+            this.moves[9] = this.cc4;
 
-            this.moves[12] = cc5;
+            this.moves[12] = this.cc5;
 
-            this.moves[15] = cc6;
+            this.moves[15] = this.cc6;
 
             for (var i = 0; i < N_MOVE; i += 3)
             {
@@ -311,7 +311,7 @@
                 newTable = LoadMoveTable(filename, lengthX, lengthY);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -324,8 +324,11 @@
                 for (var rowIndex = 0; rowIndex < table.GetLength(0); rowIndex++)
                 {
                     var line = table[rowIndex, 0].ToString();
+                    var builder = new System.Text.StringBuilder();
+                    builder.Append(line);
                     for (var columnIndex = 1; columnIndex < table.GetLength(1); columnIndex++)
-                        line += $";{table[rowIndex, columnIndex]}";
+                        builder.Append($";{table[rowIndex, columnIndex]}");
+                    line = builder.ToString();
                     sw.WriteLine(line);
                 }
             }
