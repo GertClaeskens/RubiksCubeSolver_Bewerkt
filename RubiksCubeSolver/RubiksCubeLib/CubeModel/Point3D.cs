@@ -61,21 +61,24 @@ namespace RubiksCubeLib.CubeModel
       var sina = Math.Sin(rad);
 
       //Deze nog nakijken waarom nieuw punt declareren als ook gaat met de X,Y,Z?
-      var old = new Point3D(this.X, this.Y, this.Z);
+      //var old = new Point3D(this.X, this.Y, this.Z);
+        var x = this.X;
+        var y = this.Y;
+        var z = this.Z;
 
       switch (type)
       {
         case RotationType.X:
-          this.Y = old.Y * cosa - old.Z * sina;
-          this.Z = old.Y * sina + old.Z * cosa;
+          this.Y = y * cosa - z * sina;
+          this.Z = y * sina + z * cosa;
           break;
         case RotationType.Y:
-          this.X = old.Z * sina + old.X * cosa;
-          this.Z = old.Z * cosa - old.X * sina;
+          this.X = z * sina + x * cosa;
+          this.Z = z * cosa - x * sina;
           break;
         case RotationType.Z:
-          this.X = old.X * cosa - old.Y * sina;
-          this.Y = old.X * sina + old.Y * cosa;
+          this.X = x * cosa - y * sina;
+          this.Y = x * sina + y * cosa;
           break;
           default:
               throw new ArgumentOutOfRangeException(nameof(type), type, null);
