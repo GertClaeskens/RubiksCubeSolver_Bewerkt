@@ -242,7 +242,7 @@
                 newTable = LoadPruningTable(filename, length);
                 return true;
             }
-            catch
+            catch (Exception)
             {
                 return false;
             }

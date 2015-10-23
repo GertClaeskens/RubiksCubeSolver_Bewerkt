@@ -2,13 +2,11 @@
 {
     using System;
     using System.IO;
-    using System.Threading.Tasks;
 
     public partial class TwoPhaseAlgorithm
     {
         private void InitMoveTables()
         {
-
             InitMoves();
             InitTwistMoveTable();
             InitFlipMoveTable();
@@ -19,34 +17,6 @@
             InitUBtoDF_MoveTable();
             InitURtoDF_MoveTable();
             InitMergeURtoULandUBtoDF();
-
-
-            //var initMovesTask = Task.Run(() => { this.InitMoves(); });
-            //var twistMoveTableTask = Task.Run(() => { this.InitTwistMoveTable(); });
-            //var flipMoveTableTask = Task.Run(() => { this.InitFlipMoveTable(); });
-            //var parityMoveTask = Task.Run(() => { this.InitParityMove(); });
-            //var moveTableTask = Task.Run(() => { this.InitFRtoBR_MoveTable(); });
-            //var table1Task = Task.Run(() => { this.InitURFtoDLF_MoveTable(); });
-            //var table2Task = Task.Run(() => { this.InitURtoUL_MoveTable(); });
-            //var table3Task = Task.Run(() => { this.InitUBtoDF_MoveTable(); });
-            //var table4Task = Task.Run(() => { this.InitURtoDF_MoveTable(); });
-            //var table5Task = Task.Run(() => { this.InitMergeURtoULandUBtoDF(); });
-            //await Task.WhenAll(initMovesTask , twistMoveTableTask, flipMoveTableTask, parityMoveTask,moveTableTask,table1Task, table2Task, table3Task, table4Task, table5Task);
-
-
-            //await Task.Run(() => { this.InitMoves(); });
-            //await Task.Run(() => { this.InitTwistMoveTable(); });
-            //await Task.Run(() => { this.InitFlipMoveTable(); });
-            //await Task.Run(() => { this.InitParityMove(); });
-            //await Task.Run(() => { this.InitFRtoBR_MoveTable(); });
-            //await Task.Run(() => { this.InitURFtoDLF_MoveTable(); });
-            //await Task.Run(() => { this.InitURtoUL_MoveTable(); });
-            //await Task.Run(() => { this.InitUBtoDF_MoveTable(); });
-            //await Task.Run(() => { this.InitURtoDF_MoveTable(); });
-            //await Task.Run(() => { this.InitMergeURtoULandUBtoDF(); });
-
-
-
         }
 
         private readonly CoordCube[] moves = new CoordCube[N_MOVE];
@@ -65,61 +35,34 @@
             CoordCube.FromInversions(new byte[] { 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 }),
             new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
             new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+
         private readonly CoordCube cc2 = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 1, 1, 3, 0, 1, 1, 4 }),
             CoordCube.FromInversions(new byte[] { 0, 1, 1, 1, 0, 2, 2, 2, 5, 1, 1, 11 }),
             new byte[] { 2, 0, 0, 1, 1, 0, 0, 2 },
             new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+
         private readonly CoordCube cc3 = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 0, 1, 1, 4, 1, 0, 0 }),
             CoordCube.FromInversions(new byte[] { 0, 0, 1, 1, 1, 1, 2, 2, 7, 4, 0, 0 }),
             new byte[] { 1, 2, 0, 0, 2, 1, 0, 0 },
             new byte[] { 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0 });
+
         private readonly CoordCube cc4 = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 0, 0, 0, 0, 0, 0, 3 }),
             CoordCube.FromInversions(new byte[] { 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0 }),
             new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
             new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+
         private readonly CoordCube cc5 = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 0, 0, 1, 1, 4, 1, 0 }),
             CoordCube.FromInversions(new byte[] { 0, 0, 0, 1, 1, 1, 1, 2, 2, 7, 4, 0 }),
             new byte[] { 0, 1, 2, 0, 0, 2, 1, 0 },
             new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+
         private readonly CoordCube cc6 = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 0, 0, 0, 1, 1, 4, 1 }),
             CoordCube.FromInversions(new byte[] { 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 7, 4 }),
             new byte[] { 0, 0, 1, 2, 0, 0, 2, 1 },
             new byte[] { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1 });
 
-
         private void InitMoves()
         {
-            //this.moves[0] = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 1, 1, 1, 0, 0, 0, 0 }),
-            //CoordCube.FromInversions(new byte[] { 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 }),
-            //new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
-            //new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
-
-            //this.moves[3] = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 1, 1, 3, 0, 1, 1, 4 }),
-            //CoordCube.FromInversions(new byte[] { 0, 1, 1, 1, 0, 2, 2, 2, 5, 1, 1, 11 }),
-            //new byte[] { 2, 0, 0, 1, 1, 0, 0, 2 },
-            //new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }); ;
-
-            //this.moves[6] = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 0, 1, 1, 4, 1, 0, 0 }),
-            //CoordCube.FromInversions(new byte[] { 0, 0, 1, 1, 1, 1, 2, 2, 7, 4, 0, 0 }),
-            //new byte[] { 1, 2, 0, 0, 2, 1, 0, 0 },
-            //new byte[] { 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0 }); ;
-
-            //this.moves[9] = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 0, 0, 0, 0, 0, 0, 3 }),
-            //CoordCube.FromInversions(new byte[] { 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0 }),
-            //new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
-            //new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
-
-            //this.moves[12] = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 0, 0, 1, 1, 4, 1, 0 }),
-            //CoordCube.FromInversions(new byte[] { 0, 0, 0, 1, 1, 1, 1, 2, 2, 7, 4, 0 }),
-            //new byte[] { 0, 1, 2, 0, 0, 2, 1, 0 },
-            //new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }); ;
-
-            //this.moves[15] = new CoordCube(CoordCube.FromInversions(new byte[] { 0, 0, 0, 0, 1, 1, 4, 1 }),
-            //CoordCube.FromInversions(new byte[] { 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 7, 4 }),
-            //new byte[] { 0, 0, 1, 2, 0, 0, 2, 1 },
-            //new byte[] { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1 });
-
-
             this.moves[0] = cc1;
 
             this.moves[3] = cc2;
@@ -188,7 +131,6 @@
             }
             SaveMoveTable(Path.Combine(this.TablePath, "flip_move.file"), this.twistMove);
         }
-
 
         private void InitParityMove()
         {
@@ -326,6 +268,7 @@
         }
 
         #region Save and load move tables from files
+
         private static short[,] LoadMoveTable(string filename, int lengthX, int lengthY)
         {
             if (!File.Exists(filename)) throw new Exception("File does not exist!");
@@ -368,7 +311,7 @@
                 newTable = LoadMoveTable(filename, lengthX, lengthY);
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }
@@ -387,6 +330,7 @@
                 }
             }
         }
-        #endregion
+
+        #endregion Save and load move tables from files
     }
 }

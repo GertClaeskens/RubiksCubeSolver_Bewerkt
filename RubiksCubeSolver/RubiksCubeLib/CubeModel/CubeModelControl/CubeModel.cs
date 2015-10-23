@@ -420,7 +420,7 @@ namespace RubiksCubeLib.CubeModel
             g.DrawString(this.State, this.Font, Brushes.Black, 5, this.Height - 45);
 
             g.DrawRectangle(Pens.Black, 0, 0, this.Width - 1, this.Height - 50);
-            
+
             return pos;
         }
 
